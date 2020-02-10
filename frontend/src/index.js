@@ -1,11 +1,21 @@
-let url = "http://localhost:3000/"
+const url = "http://localhost:3000"
 let addIdea = false;
+let loggedInUser = null;
 
 window.addEventListener('DOMContentLoaded', () => {
+    getUser(); // Need to change to login
     getIdeas();
     addNewButtonListener();
+    addFormSubmitEvent()
 })
 
+function getUser() {
+    fetch(`${url}/users`)
+    .then(resp => resp.json())
+    .then(user => {
+        loggedInUser = user[0]
+    })
+}
 
 function addNewButtonListener() {
     const newIdeaBtn = document.getElementById('new-idea-btn');
@@ -14,7 +24,34 @@ function addNewButtonListener() {
         addIdea = !addIdea;
         newIdeaForm.style.display = addIdea ? 'flex' : 'none';
     });
+}
 
+function addFormSubmitEvent() {
+    const form = document.querySelector('form')
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const idea = {
+            user_id: loggedInUser.id,
+            title: form.title.value,
+            description: form.description.value,
+            image: form.image.value
+        }
+        createIdea(idea);
+    });
+}
+
+function createIdea(idea) {
+    fetch(`${url}/ideas`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify(idea)
+    }).then(resp => resp.json())
+    .then(idea => {
+        renderIdea(idea)
+    })
 }
 
 function getIdeas() {

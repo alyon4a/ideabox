@@ -1,54 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <title>Idea Box</title>
-    <script type="text/javascript" src="src/index.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <div id="idea-header">
-      <img
-        src="https://www.thestephaneandre.com/wp-content/uploads/2017/04/haveIdeasToCreateContent_00-768x589.jpeg"
-        alt="idea-header"
-      />
-    </div>
 
-    <div class="container" id="new-idea-container">
-      <form class="add-idea-form">
-        <h3>Add an idea!</h3>
+<head>
+  <meta charset="utf-8" />
+  <title>Idea Box</title>
+  <script type="text/javascript" src="src/index.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="index.css" />
+</head>
 
-        <input
-          type="text"
-          name="title"
-          value=""
-          placeholder="Enter an idea title..."
-          class="input-text"
-        />
-        <br />
-        <input
-          type="text"
-          name="image"
-          value=""
-          placeholder="Enter an idea's image URL..."
-          class="input-text"
-        />
-        <br />
-        <input
-          type="submit"
-          name="submit"
-          value="Create New Idea"
-          class="submit add-button"
-        />
-      </form>
-    </div>
-    <p style="text-align:center">
-        <button class="add-button" id="new-idea-btn">Add a new idea!</button>
-    </p>
+<body>
+  <div id="idea-header">
+    <img src="https://www.thestephaneandre.com/wp-content/uploads/2017/04/haveIdeasToCreateContent_00-768x589.jpeg"
+      alt="idea-header" />
+  </div>
 
-    <div id="idea-collection">
-        <!-- <div class="card">
+  <div class="container" id="new-idea-container">
+    <form class="add-idea-form">
+      <h3>Add an idea!</h3>
+
+      <input type="text" name="title" value="" placeholder="Enter an idea title..." class="input-text" />
+      <br />
+      <input type="text" name="description" value="" placeholder="Enter an idea's description..." class="input-text" />
+      <br />
+      <input type="text" name="image" value="" placeholder="Enter an idea's image URL..." class="input-text" />
+      <br />
+      <input type="submit" name="submit" value="Create New Idea" class="submit add-button" />
+    </form>
+  </div>
+  <p style="text-align:center">
+    <button class="add-button" id="new-idea-btn">Add a new idea!</button>
+  </p>
+
+  <div id="idea-collection">
+    <!-- <div class="card">
             <img class='idea-img' src="https://media.istockphoto.com/vectors/pink-bright-vector-inscription-party-vector-neon-sign-isolated-design-vector-id1095903496?k=6&m=1095903496&s=170667a&w=0&h=cMGhe60UhsdVlIxHSosbxt9y6-vXjaeQj3hJHxnzooE=">
             <h3>Party Organizer</h3>
             <p>Organize a party with the help of this app...</p>
@@ -71,12 +57,7 @@
             <h3>Besties</h3>
             <p>An app to remind you to reach out to your friends and family regularly...</p>
         </div> -->
+  </div>
+</body>
 
-      
-
-        
-    </div>
-
-
-  </body>
 </html>
