@@ -1,0 +1,122 @@
+body {
+    margin: 0;
+    font-family: monospace;
+  }
+  
+  #idea-header {
+    display: flex;
+    justify-content: center;
+    background: rgb(4, 103, 110);
+    opacity: .8;
+    height: 7rem;
+  }
+  
+  #idea-header img {
+    height: 7rem;
+    width: auto;
+  }
+  
+  #idea-collection {
+    display: flex-wrap;
+    justify-content: space-around;
+  }
+
+  .upvote {
+    align-self: flex-end;
+    justify-self: flex-end;  
+    display: flex;
+  }
+
+  .upvote-btn {
+    text-align: center;
+    width: 2rem;
+    height: 2rem;
+    font-size: xx-large; 
+    color: whitesmoke;
+    border-radius: 50%;
+    background-color: teal;
+  }
+
+  .upvote-num {
+    color: teal;
+    font-size: x-large; 
+    justify-self: flex-start;
+  }
+  
+  .card {
+    text-align: center;
+    border: rgb(16, 126, 160) solid 1px;
+    padding: 1rem;
+    width: 17rem;
+    height: 23rem;
+    display: inline-grid;
+    margin: 1rem 2rem;
+  }
+  
+  .idea-img {
+    justify-self: center;
+    display: inline-block;
+    height: 10rem;
+    width: auto;
+  }
+  
+  .add-button {
+    position: relative;
+    background-color: #dd509e;
+    border: none;
+    border-radius: 5px;
+    height: 3rem;
+    width: max-content;
+    color: whitesmoke;
+    font-size: 18px;
+    justify-self: center;
+    margin: 1rem;
+  }
+  
+  .add-button:hover {
+    background-color: whitesmoke;
+    border: #dd509e solid 1px;
+    color: #dd509e;
+  }
+  
+  .container {
+    padding: 1rem;
+    width: stretch;
+    height: auto;
+    display: none;
+    background: #dd509e;
+    opacity: .8;
+  }
+  
+  .add-idea-form {
+    width: 80%
+  }
+  
+  .submit {
+    position: relative;
+    background-color: #dd509e;
+    border-radius: 5px;
+    height: 2rem;
+    width: max-content;
+    color: whitesmoke;
+    font-size: 18px;
+    justify-self: center;
+    font-family: monospace;
+    margin: 3px;
+  }
+  
+  .submit:hover {
+    background-color: whitesmoke;
+    border: #dd509e solid 1px;
+    color: #dd509e;
+  }
+  
+  .input-text {
+    border-radius: 5px;
+    height: 2rem;
+    width: 60%;
+    font-size: 18px;
+    font-family: monospace;
+    margin: 3px;
+  }
+  

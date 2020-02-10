@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Idea Box</title>
+    <script type="text/javascript" src="src/index.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div id="idea-header">
+      <img
+        src="https://www.thestephaneandre.com/wp-content/uploads/2017/04/haveIdeasToCreateContent_00-768x589.jpeg"
+        alt="idea-header"
+      />
+    </div>
+
+    <div class="container" id="new-idea-container">
+      <form class="add-idea-form">
+        <h3>Add an idea!</h3>
+
+        <input
+          type="text"
+          name="title"
+          value=""
+          placeholder="Enter an idea title..."
+          class="input-text"
+        />
+        <br />
+        <input
+          type="text"
+          name="image"
+          value=""
+          placeholder="Enter an idea's image URL..."
+          class="input-text"
+        />
+        <br />
+        <input
+          type="submit"
+          name="submit"
+          value="Create New Idea"
+          class="submit add-button"
+        />
+      </form>
+    </div>
+    <p style="text-align:center">
+        <button class="add-button" id="new-idea-btn">Add a new idea!</button>
+    </p>
+
+    <div id="idea-collection">
+        <div class="card">
+            <img class='idea-img' src="https://media.istockphoto.com/vectors/pink-bright-vector-inscription-party-vector-neon-sign-isolated-design-vector-id1095903496?k=6&m=1095903496&s=170667a&w=0&h=cMGhe60UhsdVlIxHSosbxt9y6-vXjaeQj3hJHxnzooE=">
+            <h3>Party Organizer</h3>
+            <p>Organize a party with the help of this app...</p>
+            <!--  Organize a party with the help of this app. Your party participants can choose what they can bring (who's buying pizza? who's bringing champagne?). Keep track of food allergies. And if one of participants already bought the booze last time, it's someone else's turn this time!  -->
+            <div class='upvote'>
+              <label class='upvote-num'>2</label>
+              <button class='upvote-btn'>^</button>
+            </div>
+            
+        </div>
+
+        <div class="card">
+            <img class='idea-img' src="https://thenypost.files.wordpress.com/2019/03/corgi1.jpg?quality=80&strip=all&w=618&h=410&crop=1">
+            <h3>Pet Swap</h3>
+            <p>A network of friends and neighbours to look after each other's pet when someone is out of town...</p>
+        </div>
+
+        <div class="card">
+            <img class='idea-img' src="https://miro.medium.com/max/13440/0*bQ5OrqPghsuhXEV_">
+            <h3>Besties</h3>
+            <p>An app to remind you to reach out to your friends and family regularly...</p>
+        </div>
+
+      
+
+        
+    </div>
+
+
+  </body>
+</html>
