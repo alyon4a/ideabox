@@ -77,7 +77,7 @@ function renderIdea(idea) {
     <h3>${idea.title}</h3>
     <p>${idea.description}</p>
     <div class='upvote'>
-        <label class='upvote-num'>2</label>
+        <label class='upvote-num'>${idea.up_votes}</label>
         <button class='upvote-btn'>^</button>
     </div>
     `
