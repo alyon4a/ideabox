@@ -41,6 +41,7 @@ body {
   color: teal;
   font-size: x-large; 
   justify-self: flex-start;
+  margin: 0px;
 }
 
 .card {
@@ -127,4 +128,11 @@ body {
 
 .flip {
   transform: rotate(180deg);
+}
+
+.icon {
+  max-width: 30px;
+  max-height: 30px;
+  margin-top: -20px;
+  margin-left: -7px;
 }

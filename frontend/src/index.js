@@ -3,7 +3,7 @@ let addIdea = false;
 let loggedInUser = null;
 
 window.addEventListener('DOMContentLoaded', () => {
-    getUser(); // Need to change to login
+    // getUser(); // Need to change to login
     getIdeas();
     addNewButtonListener();
     addFormSubmitEvent()
@@ -78,14 +78,24 @@ function renderIdea(idea) {
     <img class='idea-img' src=${idea.image}>
     <h3>${idea.title}</h3>
     <p>${idea.description}</p>
-    <div class='upvote'>
-        <label class='upvote-num'>${idea.up_votes}</label>
-        <button class='upvote-btn'>^</button>
-        <button class='upvote-btn flip'>^</button>
+    <div class="row">
+        <div class="col-6">
+            <label class='upvote-num align-middle'>${idea.implementors}</label>
+            <button class='upvote-btn align-middle justify-content-center'>
+                <image class="icon" src="https://www.stickpng.com/assets/images/585e4be1cb11b227491c3398.png" />
+            </button>
+        </div>
+        <div class='col-6 justify-content-end'>
+            <label class='upvote-num align-middle'>${idea.up_votes}</label>
+            <button class='upvote-btn align-middle'>^</button>
+            <button class='upvote-btn align-middle flip'>^</button>
+        </div>
     </div>
     `
-    const upVote = div.querySelector('.upvote-btn')
-    addUpVoteEvent(upVote)
+    if(loggedInUser) {
+        const upVote = div.querySelector('.upvote-btn')
+        addUpVoteEvent(upVote)
+    }
 
     ideaCollection.appendChild(div)
 }
