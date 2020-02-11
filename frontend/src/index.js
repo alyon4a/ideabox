@@ -90,14 +90,15 @@ function renderIdea(idea) {
     <img class='idea-img' src=${idea.image}>
     <h3>${idea.title}</h3>
     <p>${idea.description}</p>
-    <div class="row">
-        <div class="col-6 text-left">
+    <div class="row no-gutters">
+        <div class="col text-left">
             <label class='upvote-num align-middle'>${idea.implementors}</label>
             <button class='upvote-btn align-middle justify-content-center'>
                 <image class="icon" src="https://www.pinclipart.com/picdir/big/345-3453156_person-icons-outline-iconfinder-clipart.png" />
             </button>
         </div>
-        <div class='col-6 justify-content-end'>
+        <div class="col"><button class="btn btn-info idea-details-btn" data-toggle="modal" data-target="#ideaModal">...</button></div>
+        <div class='col-6'>
             <label class='upvote-num align-middle'>${idea.up_votes}</label>
             <button class='upvote-btn align-middle'>^</button>
             <button class='upvote-btn align-middle flip'>^</button>
@@ -107,6 +108,8 @@ function renderIdea(idea) {
     // if(loggedInUser) {
         const upVote = div.getElementsByClassName('upvote-btn')[1]
         addUpVoteEvent(upVote)
+        const ideaDetailsBtn = div.getElementsByClassName('idea-details-btn')[0];
+        addIdeaDetailsBtnListener(ideaDetailsBtn);
     // }
 
     ideaCollection.appendChild(div)
@@ -144,4 +147,17 @@ function hideOrDisplayOnLogin() {
     hide = !loggedInUser;
     const loggedInDiv = document.getElementById('logged-in');
     loggedInDiv.style.display = hide ? 'none' : '';
+}
+
+function addIdeaDetailsBtnListener(button) {
+    button.addEventListener('click', (event) => {
+        const id = event.target.parentElement.parentElement.parentElement.dataset.id
+        
+        fetch(`${url}/ideas/${id}`)
+        .then(resp => resp.json())
+        .then(idea => {
+            const modalBody = document.getElementsByClassName('modal-body')[0];
+            modalBody.innerText = "TBD: display idea details in a form, author can edit, others can see more details and participate as implementor.   " + idea.title + "   " + idea.description;
+        })
+    })
 }

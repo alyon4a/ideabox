@@ -9,6 +9,11 @@ class IdeasController < ApplicationController
         render json: idea, status: 201
     end
 
+    def show
+        idea = Idea.find(params[:id])
+        render json: idea, status: 201
+    end
+
     private
     def idea_params
         params.require(:idea).permit(:user_id, :title, :description, :image)
