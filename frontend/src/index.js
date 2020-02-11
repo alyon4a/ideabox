@@ -116,8 +116,14 @@ function addUpVoteEvent(button) {
             },
             body: JSON.stringify(up_vote)
         }).then(resp => resp.json())
-        .then(idea => {
-            renderIdea(idea)
+        .then(like => {
+            const cards = document.getElementsByClassName('card')
+            Array.from(cards).forEach(card => {
+                if(parseInt(card.dataset.id) === like.idea_id) {
+                    const likes = card.children[3].children[1].children[0].innerText
+                    card.children[3].children[1].children[0].innerText = parseInt(likes) + 1
+                }
+            })
         })
     })
 }
