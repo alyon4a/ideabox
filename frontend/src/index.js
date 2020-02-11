@@ -72,6 +72,8 @@ function renderIdea(idea) {
     const ideaCollection = document.getElementById("idea-collection")
     const div = document.createElement('div')
     div.classList.add("card")
+    div.dataset.id = idea.id
+
     div.innerHTML = `
     <img class='idea-img' src=${idea.image}>
     <h3>${idea.title}</h3>
@@ -79,7 +81,33 @@ function renderIdea(idea) {
     <div class='upvote'>
         <label class='upvote-num'>${idea.up_votes}</label>
         <button class='upvote-btn'>^</button>
+        <button class='upvote-btn flip'>^</button>
     </div>
     `
+    const upVote = div.querySelector('.upvote-btn')
+    addUpVoteEvent(upVote)
+
     ideaCollection.appendChild(div)
+}
+
+function addUpVoteEvent(button) {
+    button.addEventListener('click', (event) => {
+        const id = event.target.parentElement.parentElement.dataset.id
+        const up_vote = {
+            user_id: loggedInUser.id,
+            idea_id: parseInt(id)
+        }
+
+        fetch(`${url}/up_votes`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify(up_vote)
+        }).then(resp => resp.json())
+        .then(idea => {
+            renderIdea(idea)
+        })
+    })
 }

@@ -124,3 +124,7 @@ body {
   max-width: 240px;
   max-height: 160px;
 }
+
+.flip {
+  transform: rotate(180deg);
+}
