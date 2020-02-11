@@ -79,7 +79,7 @@ function renderIdea(idea) {
     <h3>${idea.title}</h3>
     <p>${idea.description}</p>
     <div class="row">
-        <div class="col-6">
+        <div class="col-6 text-left">
             <label class='upvote-num align-middle'>${idea.implementors}</label>
             <button class='upvote-btn align-middle justify-content-center'>
                 <image class="icon" src="https://www.pinclipart.com/picdir/big/345-3453156_person-icons-outline-iconfinder-clipart.png" />
@@ -93,7 +93,7 @@ function renderIdea(idea) {
     </div>
     `
     // if(loggedInUser) {
-        const upVote = div.querySelector('.upvote-btn')
+        const upVote = div.getElementsByClassName('upvote-btn')[1]
         addUpVoteEvent(upVote)
     // }
 
@@ -102,7 +102,7 @@ function renderIdea(idea) {
 
 function addUpVoteEvent(button) {
     button.addEventListener('click', (event) => {
-        const id = event.target.parentElement.parentElement.dataset.id
+        const id = event.target.parentElement.parentElement.parentElement.dataset.id
         const up_vote = {
             user_id: loggedInUser.id,
             idea_id: parseInt(id)
