@@ -3,17 +3,18 @@ let addIdea = false;
 let loggedInUser = null;
 
 window.addEventListener('DOMContentLoaded', () => {
-    getUser(); // Need to change to login
+    addLoginEventListener(); // Need to change to login
     getIdeas();
     addNewButtonListener();
     addFormSubmitEvent()
 })
 
-function getUser() {
-    fetch(`${url}/users`)
+function getUser(email) {
+    fetch(`${url}/users/login?email=${email}`)
     .then(resp => resp.json())
     .then(user => {
-        loggedInUser = user[0]
+        loggedInUser = user;
+        console.log(loggedInUser)
     })
 }
 
@@ -26,8 +27,18 @@ function addNewButtonListener() {
     });
 }
 
+function addLoginEventListener() {
+    const form = document.querySelector('.login-form')
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const email = form.email.value;
+        getUser(email);
+        form.email.value = "";
+    });
+}
+
 function addFormSubmitEvent() {
-    const form = document.querySelector('form')
+    const form = document.querySelector(".add-idea-form");
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         const idea = {

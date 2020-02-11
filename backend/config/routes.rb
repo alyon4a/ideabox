@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # Users
   get '/users', to: 'users#index'
+  get '/users/login', to: 'users#login'
   get '/users/:id', to: 'users#show'
   # Ideas
   get '/ideas', to: 'ideas#index'

@@ -14,6 +14,11 @@ class UsersController < ApplicationController
         render json: user, status: 201
     end
 
+    def login
+        user = User.find_by(email: params[:email])
+        render json: user, status: 201
+    end
+
     private
     def user_params
         params.require(:user).permit(:name, :email, :image)
