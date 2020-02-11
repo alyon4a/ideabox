@@ -19,25 +19,26 @@
         <input type="submit" name="submit" value="Login" class="submit" />
       </form>
   </div>
+  <div id="logged-in">
+    <div class="container" id="new-idea-container">
+      <form class="add-idea-form">
+        <h3>Add an idea!</h3>
 
-  <div class="container" id="new-idea-container">
-    <form class="add-idea-form">
-      <h3>Add an idea!</h3>
+        <input type="text" name="title" value="" placeholder="Enter an idea title..." class="input-text" />
+        <br />
+        <input type="text" name="description" value="" placeholder="Enter an idea's description..." class="input-text" />
+        <br />
+        <input type="text" name="image" value="" placeholder="Enter an idea's image URL..." class="input-text" />
+        <br />
+        <input type="submit" name="submit" value="Create New Idea" class="submit add-button" />
+      </form>
+    </div>
+    <p style="text-align:center">
+      <button class="add-button" id="new-idea-btn">Add a new idea!</button>
+    </p>
 
-      <input type="text" name="title" value="" placeholder="Enter an idea title..." class="input-text" />
-      <br />
-      <input type="text" name="description" value="" placeholder="Enter an idea's description..." class="input-text" />
-      <br />
-      <input type="text" name="image" value="" placeholder="Enter an idea's image URL..." class="input-text" />
-      <br />
-      <input type="submit" name="submit" value="Create New Idea" class="submit add-button" />
-    </form>
-  </div>
-  <p style="text-align:center">
-    <button class="add-button" id="new-idea-btn">Add a new idea!</button>
-  </p>
-
-  <div id="idea-collection">
+    <div id="idea-collection">
+    </div>
   </div>
 </body>
 

@@ -4,6 +4,7 @@ let loggedInUser = null;
 
 window.addEventListener('DOMContentLoaded', () => {
     addLoginEventListener(); // Need to change to login
+    hideOrDisplayOnLogin();
     getIdeas();
     addNewButtonListener();
     addFormSubmitEvent()
@@ -14,7 +15,7 @@ function getUser(email) {
     .then(resp => resp.json())
     .then(user => {
         loggedInUser = user;
-        console.log(loggedInUser)
+        hideOrDisplayOnLogin();
     })
 }
 
@@ -137,4 +138,10 @@ function addUpVoteEvent(button) {
             })
         })
     })
+}
+
+function hideOrDisplayOnLogin() {
+    hide = !loggedInUser;
+    const loggedInDiv = document.getElementById('logged-in');
+    loggedInDiv.style.display = hide ? 'none' : '';
 }
