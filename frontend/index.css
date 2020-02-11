@@ -131,8 +131,9 @@ body {
 }
 
 .icon {
-  max-width: 30px;
+  max-width: 20px;
   max-height: 30px;
   margin-top: -20px;
-  margin-left: -7px;
+  margin-left: -2px;
+  filter: invert(100%);
 }
