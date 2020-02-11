@@ -6,7 +6,7 @@ class UpVotesController < ApplicationController
             upVote = UpVote.create(params)
             render json: upVote, status: 201
         else
-            render status: 401
+            render status: 412
         end
     end
 
