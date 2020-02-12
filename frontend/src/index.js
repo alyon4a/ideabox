@@ -207,6 +207,7 @@ function addIdeaDetailsBtnListener(button) {
             const ideaModalLabel = document.getElementById('ideaModalLabel');
             ideaModalLabel.innerText = idea.title;
             renderIdeaDetails(idea, modalBody);
+            addSaveButtonListener();
         })
     })
 }
@@ -234,10 +235,16 @@ function renderIdeaDetails(idea, modalBody) {
         <img class="idea-img-details" src=${idea.image}>
     `
     const secondRow = modalBody.querySelector('.col-7')
-    implementors = idea.implementors.reduce(implementorsString, "");
+    implementors = implementorsString(idea.implementors);
     secondRow.innerHTML = `
         <h4>Author: ${idea.user.name}</h4>
         <h4>Implementors: <br/> ${implementors}</h4>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="implement-check">
+            <label class="form-check-label" for="implement-check">
+                Implement this idea
+            </label>
+        </div>
     `
     if (idea.user.id === loggedInUser.id) {
         secondRow.innerHTML += `<div><textarea rows=5>${idea.description}</textarea></div>`
@@ -247,7 +254,17 @@ function renderIdeaDetails(idea, modalBody) {
     }
 }
 
-function implementorsString(result, implementor) {
-    const space = result.length > 0 ? ", " : " "
-    return result + space + implementor.name;
+function implementorsString(implementors) {
+    let result = implementors.reduce((result, implementor) => {
+        const space = result.length > 0 ? ", " : " ";
+        return result + space + implementor.name;
+    }, "");
+    if (result.length === 0) {
+        result = "None."
+    }
+    return result;
+}
+
+function addSaveButtonListener() {
+    const saveBtn = document.getElementById()
 }
