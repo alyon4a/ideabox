@@ -23,6 +23,7 @@ idea2 = Idea.create(user: user2, title: "Pet Swap", description: "A network of f
 idea3 = Idea.create(user: user3, title: "Besties", description: "An app to remind you to reach out to your friends and family regularly...", image: "https://miro.medium.com/max/13440/0*bQ5OrqPghsuhXEV_")
 IdeaTag.create(idea: idea1, tag: tag)
 Implementor.create(idea: idea1, user: user2)
+Implementor.create(idea: idea1, user: user3)
 Comment.create(user: user3, idea: idea1, content: "comment", by_participant: true)
 UpVote.create(user: user3, idea: idea1)
 

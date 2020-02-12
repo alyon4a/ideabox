@@ -206,29 +206,45 @@ function addIdeaDetailsBtnListener(button) {
             const modalBody = document.getElementsByClassName('modal-body')[0];
             const ideaModalLabel = document.getElementById('ideaModalLabel');
             ideaModalLabel.innerText = idea.title;
-            modalBody.innerHTML = renderIdeaDetails(idea);
+            renderIdeaDetails(idea, modalBody);
         })
     })
 }
 
-function renderIdeaDetails(idea) {
-    console.dir(idea);
+function renderIdeaDetails(idea, modalBody) {
+    // console.dir(idea);
+    // implementors = idea.implementors.reduce(implementorsString, "");
+    // let innerHTML = `
+    //                 <div>
+    //                     <img class="idea-img-details" src=${idea.image}>
+    //                 </div>
+    //                 <h4>Author: ${idea.user.name}</h4>
+    //                 <h4>Implementors: ${implementors}</h4>`
+    // if (idea.user.id === loggedInUser.id) {
+    //     innerHTML += `<div><textarea rows=5>${idea.description}</textarea></div>`
+    // }
+    // else {
+    //     innerHTML += `<div><p>${idea.description}</p></div>`
+    // }
+
+
+    // return innerHTML;
+    const firstRow = modalBody.querySelector('.col-5')
+    firstRow.innerHTML = `
+        <img class="idea-img-details" src=${idea.image}>
+    `
+    const secondRow = modalBody.querySelector('.col-7')
     implementors = idea.implementors.reduce(implementorsString, "");
-    let innerHTML = `
-                    <div>
-                        <img class="idea-img-details" src=${idea.image}>
-                    </div>
-                    <h4>Author: ${idea.user.name}</h4>
-                    <h4>Implementors: ${implementors}</h4>`
+    secondRow.innerHTML = `
+        <h4>Author: ${idea.user.name}</h4>
+        <h4>Implementors: <br/> ${implementors}</h4>
+    `
     if (idea.user.id === loggedInUser.id) {
-        innerHTML += `<div><textarea>${idea.description}</textarea></div>`
+        secondRow.innerHTML += `<div><textarea rows=5>${idea.description}</textarea></div>`
     }
     else {
-        innerHTML += `<div><p>${idea.description}</p></div>`
+        secondRow.innerHTML += `<div><p>${idea.description}</p></div>`
     }
-
-
-    return innerHTML;
 }
 
 function implementorsString(result, implementor) {
