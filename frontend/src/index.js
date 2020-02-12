@@ -92,18 +92,20 @@ function renderIdea(idea) {
     div.dataset.id = idea.id
 
     div.innerHTML = `
-    <img class='idea-img' src=${idea.image}>
-    <h3>${idea.title}</h3>
-    <p>${idea.description}</p>
+    <div class="card-content">
+        <img class='idea-img' src=${idea.image}>
+        <h3>${idea.title}</h3>
+        <p>${idea.description}</p>
+    </div>
     <div class="row no-gutters">
-        <div class="col text-left">
+        <div class="col-3 text-left">
             <label class='upvote-num align-middle'>${idea.implementors}</label>
             <button class='upvote-btn align-middle justify-content-center'>
                 <image class="icon" src="https://www.pinclipart.com/picdir/big/345-3453156_person-icons-outline-iconfinder-clipart.png" />
             </button>
         </div>
-        <div class="col"><button class="btn btn-info idea-details-btn" data-toggle="modal" data-target="#ideaModal">...</button></div>
-        <div class='col-6'>
+        <div class="col-6"><button class="btn btn-info idea-details-btn" data-toggle="modal" data-target="#ideaModal">...</button></div>
+        <div class='col-3 text-right'>
             <label class='upvote-num align-middle'>${idea.up_votes}</label>
         </div>
     </div>
@@ -111,7 +113,7 @@ function renderIdea(idea) {
 
     const ideaDetailsBtn = div.getElementsByClassName('idea-details-btn')[0];
     addIdeaDetailsBtnListener(ideaDetailsBtn);
-    addUpVoteButton(div.querySelector('.col-6'), idea.id)
+    addUpVoteButton(div.querySelector('.text-right'), idea.id)
 
     ideaCollection.appendChild(div, idea.id)
 }
@@ -213,23 +215,6 @@ function addIdeaDetailsBtnListener(button) {
 }
 
 function renderIdeaDetails(idea, modalBody) {
-    // console.dir(idea);
-    // implementors = idea.implementors.reduce(implementorsString, "");
-    // let innerHTML = `
-    //                 <div>
-    //                     <img class="idea-img-details" src=${idea.image}>
-    //                 </div>
-    //                 <h4>Author: ${idea.user.name}</h4>
-    //                 <h4>Implementors: ${implementors}</h4>`
-    // if (idea.user.id === loggedInUser.id) {
-    //     innerHTML += `<div><textarea rows=5>${idea.description}</textarea></div>`
-    // }
-    // else {
-    //     innerHTML += `<div><p>${idea.description}</p></div>`
-    // }
-
-
-    // return innerHTML;
     const firstRow = modalBody.querySelector('.col-5')
     firstRow.innerHTML = `
         <img class="idea-img-details" src=${idea.image}>

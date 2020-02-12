@@ -167,3 +167,8 @@ textarea {
 .modal-content {
   margin: 20vh 0 0 0;
 }
+
+.card-content {
+  max-width: 240px;
+  height: 305px;
+}
