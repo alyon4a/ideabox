@@ -92,9 +92,11 @@ function renderIdea(idea) {
     div.dataset.id = idea.id
 
     div.innerHTML = `
-    <img class='idea-img' src=${idea.image}>
-    <h3>${idea.title}</h3>
-    <p>${idea.description}</p>
+    <div class="card-content">
+        <img class='idea-img' src=${idea.image}>
+        <h3>${idea.title}</h3>
+        <p>${idea.description}</p>
+    </div>
     <div class="row no-gutters">
         <div class="col-3 text-left">
             <label class='upvote-num align-middle'>${idea.implementors}</label>
@@ -212,23 +214,6 @@ function addIdeaDetailsBtnListener(button) {
 }
 
 function renderIdeaDetails(idea, modalBody) {
-    // console.dir(idea);
-    // implementors = idea.implementors.reduce(implementorsString, "");
-    // let innerHTML = `
-    //                 <div>
-    //                     <img class="idea-img-details" src=${idea.image}>
-    //                 </div>
-    //                 <h4>Author: ${idea.user.name}</h4>
-    //                 <h4>Implementors: ${implementors}</h4>`
-    // if (idea.user.id === loggedInUser.id) {
-    //     innerHTML += `<div><textarea rows=5>${idea.description}</textarea></div>`
-    // }
-    // else {
-    //     innerHTML += `<div><p>${idea.description}</p></div>`
-    // }
-
-
-    // return innerHTML;
     const firstRow = modalBody.querySelector('.col-5')
     firstRow.innerHTML = `
         <img class="idea-img-details" src=${idea.image}>
