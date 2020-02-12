@@ -1,17 +1,17 @@
 class IdeasController < ApplicationController
     def index
         ideas = Idea.all
-        render json: ideas, status: 201
+        render json: ideas, each_serializer: IdeaCardSerializer, status: 201
     end
 
     def create
         idea = Idea.create(idea_params)
-        render json: idea, status: 201
+        render json: idea, each_serializer: IdeaCardSerializer, status: 201
     end
 
     def show
         idea = Idea.find(params[:id])
-        render json: idea, status: 201
+        render json: idea, serializer: IdeaDetailSerializer, status: 201
     end
 
     private
