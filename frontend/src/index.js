@@ -19,7 +19,6 @@ function getUser(email) {
             const profile = document.querySelector(".profile")
             profile.innerHTML = ""
             profile.innerHTML = `<h1>Welcome, ${user.name}!</h1>`
-            console.log(loggedInUser)
             hideOrDisplayOnLogin();
         }
     })
@@ -168,7 +167,34 @@ function addIdeaDetailsBtnListener(button) {
         .then(resp => resp.json())
         .then(idea => {
             const modalBody = document.getElementsByClassName('modal-body')[0];
-            modalBody.innerText = "TBD: display idea details in a form, author can edit, others can see more details and participate as implementor.   " + idea.title + "   " + idea.description;
+            const ideaModalLabel = document.getElementById('ideaModalLabel');
+            ideaModalLabel.innerText = idea.title;
+            modalBody.innerHTML = renderIdeaDetails(idea);
         })
     })
+}
+
+function renderIdeaDetails(idea) {
+    console.dir(idea);
+    implementors = idea.implementors.reduce(implementorsString, "");
+    let innerHTML = `
+                    <div>
+                        <img class="idea-img-details" src=${idea.image}>
+                    </div>
+                    <h4>Author: ${idea.user.name}</h4>
+                    <h4>Implementors: ${implementors}</h4>`
+    if (idea.user.id === loggedInUser.id) {
+        innerHTML += `<div><textarea>${idea.description}</textarea></div>`
+    }
+    else {
+        innerHTML += `<div><p>${idea.description}</p></div>`
+    }
+
+
+    return innerHTML;
+}
+
+function implementorsString(result, implementor) {
+    const space = result.length > 0 ? ", " : " "
+    return result + space + implementor.name;
 }

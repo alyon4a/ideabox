@@ -137,3 +137,10 @@ body {
   margin-left: -2px;
   filter: invert(100%);
 }
+
+.idea-img-details {
+  max-width: 280px;
+  max-height: 200px;
+  justify-self: center;
+}
+
