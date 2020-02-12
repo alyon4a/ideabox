@@ -96,14 +96,14 @@ function renderIdea(idea) {
     <h3>${idea.title}</h3>
     <p>${idea.description}</p>
     <div class="row no-gutters">
-        <div class="col text-left">
+        <div class="col-3 text-left">
             <label class='upvote-num align-middle'>${idea.implementors}</label>
             <button class='upvote-btn align-middle justify-content-center'>
                 <image class="icon" src="https://www.pinclipart.com/picdir/big/345-3453156_person-icons-outline-iconfinder-clipart.png" />
             </button>
         </div>
-        <div class="col"><button class="btn btn-info idea-details-btn" data-toggle="modal" data-target="#ideaModal">...</button></div>
-        <div class='col-6'>
+        <div class="col-6"><button class="btn btn-info idea-details-btn" data-toggle="modal" data-target="#ideaModal">...</button></div>
+        <div class='col-3 text-right'>
             <label class='upvote-num align-middle'>${idea.up_votes}</label>
         </div>
     </div>
@@ -111,7 +111,7 @@ function renderIdea(idea) {
 
     const ideaDetailsBtn = div.getElementsByClassName('idea-details-btn')[0];
     addIdeaDetailsBtnListener(ideaDetailsBtn);
-    addUpVoteButton(div.querySelector('.col-6'), idea.id)
+    addUpVoteButton(div.querySelector('.text-right'), idea.id)
 
     ideaCollection.appendChild(div, idea.id)
 }
