@@ -7,4 +7,8 @@ class IdeaDetailSerializer < ActiveModel::Serializer
   def up_votes 
     self.object.up_votes ? self.object.up_votes.length : 0
   end
+
+  def implementors
+    self.object.implementors.map{|implementor| implementor.user}
+  end
 end

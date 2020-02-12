@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   get '/comments/idea/:id', to: 'comments#ideaComments'
   # Up Vote
   post '/up_votes', to: 'up_votes#create'
-  delete '/up_votes', to: 'up_votes#destroy'
+  delete '/up_votes/:id', to: 'up_votes#destroy'
 end

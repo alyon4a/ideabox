@@ -11,13 +11,12 @@ class UpVotesController < ApplicationController
     end
 
     def destroy
-        params = up_vote_params
-        upVote = UpVote.find_by(user_id: params["user_id"], idea_id: params["idea_id"])
-        if(!upVote)
+        upVote = UpVote.find(params["id"])
+        if(upVote)
             upVote.destroy
-            render status: 201
+            render json: true, status: 201
         else
-            render status: 401
+            render status: 412
         end
     end
 

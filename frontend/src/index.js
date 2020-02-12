@@ -5,7 +5,6 @@ let loggedInUser = null;
 window.addEventListener('DOMContentLoaded', () => {
     addLoginEventListener(); // Need to change to login
     hideOrDisplayOnLogin();
-    getIdeas();
     addNewButtonListener();
     addFormSubmitEvent()
 })
@@ -15,6 +14,7 @@ function getUser(email) {
     .then(resp => resp.json())
     .then(user => {
         if(user) {
+            getIdeas();
             loggedInUser = user;
             const profile = document.querySelector(".profile")
             profile.innerHTML = ""
@@ -105,27 +105,39 @@ function renderIdea(idea) {
         <div class="col"><button class="btn btn-info idea-details-btn" data-toggle="modal" data-target="#ideaModal">...</button></div>
         <div class='col-6'>
             <label class='upvote-num align-middle'>${idea.up_votes}</label>
-            <button class='upvote-btn align-middle'>^</button>
-            <button class='upvote-btn align-middle flip'>^</button>
         </div>
     </div>
     `
-    // if(loggedInUser) {
-        const upVote = div.getElementsByClassName('upvote-btn')[1]
-        addUpVoteEvent(upVote)
-        const ideaDetailsBtn = div.getElementsByClassName('idea-details-btn')[0];
-        addIdeaDetailsBtnListener(ideaDetailsBtn);
-    // }
 
-    ideaCollection.appendChild(div)
+    const ideaDetailsBtn = div.getElementsByClassName('idea-details-btn')[0];
+    addIdeaDetailsBtnListener(ideaDetailsBtn);
+    addUpVoteButton(div.querySelector('.col-6'), idea.id)
+
+    ideaCollection.appendChild(div, idea.id)
+}
+
+function addUpVoteButton(div, ideaId) {
+    if(loggedInUser) {
+        const likedIdea = loggedInUser.up_votes.find(upVote => upVote.idea_id === ideaId)
+        const button = document.createElement('button')
+        button.className = "upvote-btn align-middle"
+        button.innerText = '^'
+        if(likedIdea) {
+            button.classList.add('flip')
+            addDownVoteEvent(button)
+        } else {
+            addUpVoteEvent(button)
+        }
+        div.appendChild(button)
+    }
 }
 
 function addUpVoteEvent(button) {
     button.addEventListener('click', (event) => {
-        const id = event.target.parentElement.parentElement.parentElement.dataset.id
+        const id = parseInt(event.target.parentElement.parentElement.parentElement.dataset.id)
         const up_vote = {
             user_id: loggedInUser.id,
-            idea_id: parseInt(id)
+            idea_id: id
         }
 
         fetch(`${url}/up_votes`, {
@@ -137,20 +149,45 @@ function addUpVoteEvent(button) {
             body: JSON.stringify(up_vote)
         }).then(resp => resp.json())
         .then(like => {
-            const cards = document.getElementsByClassName('card')
-            const card = Array.from(cards).find(cardInArray => {
-                if(parseInt(cardInArray.dataset.id) === like.idea_id) {
-                    return cardInArray
-                }
-            })
-            if(card) {
-                const likes = card.children[3].children[1].children[0].innerText
-                card.children[3].children[1].children[0].innerText = parseInt(likes) + 1
-            }
+            const card = event.target.parentElement.parentElement.parentElement
+            updateUpVote(true, card)
+            loggedInUser.up_votes.push(like)
+            updateUpVoteButton(event.target, id)
         }).catch(err => {
             console.log("already liked")
         })
     })
+}
+
+function addDownVoteEvent(button) {
+    button.addEventListener('click', (event) => {
+        const ideaId = parseInt(event.target.parentElement.parentElement.parentElement.dataset.id)
+        const upVoteIndex = loggedInUser.up_votes.findIndex(upVote => upVote.idea_id === ideaId)
+        fetch(`${url}/up_votes/${loggedInUser.up_votes[upVoteIndex].id}`, {
+            method: 'DELETE',
+        }).then(resp => resp.json())
+        .then(like => {
+            loggedInUser.up_votes.splice(upVoteIndex, 1)
+            const card = event.target.parentElement.parentElement.parentElement
+            updateUpVote(false, card)
+            updateUpVoteButton(event.target, ideaId)
+        })
+    })
+}
+
+function updateUpVoteButton(button, idea_id) {
+    const parent = button.parentElement;
+    button.remove()
+    addUpVoteButton(parent, idea_id)
+}
+
+function updateUpVote(upvote, card) {
+    const likes = card.getElementsByClassName('upvote-num')[1]
+    if(upvote) {
+        likes.innerText = parseInt(likes.innerText) + 1
+    } else {
+        likes.innerText = parseInt(likes.innerText) - 1
+    }
 }
 
 function hideOrDisplayOnLogin() {
