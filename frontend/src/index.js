@@ -209,9 +209,14 @@ function addIdeaDetailsBtnListener(button) {
             const ideaModalLabel = document.getElementById('ideaModalLabel');
             ideaModalLabel.innerText = idea.title;
             renderIdeaDetails(idea, modalBody);
-            addSaveButtonListener();
+            addSaveButtonListener(idea);
         })
     })
+}
+
+function isUserImplementor(implementors) {
+    const implementor = implementors.find(implementor => {return implementor.id === loggedInUser.id});
+    return implementor != undefined;
 }
 
 function renderIdeaDetails(idea, modalBody) {
@@ -231,6 +236,10 @@ function renderIdeaDetails(idea, modalBody) {
             </label>
         </div>
     `
+    const userIsImplementor = isUserImplementor(idea.implementors);
+    if (userIsImplementor) {
+        document.getElementById('implement-check').defaultChecked = true;
+    }
     if (idea.user.id === loggedInUser.id) {
         secondRow.innerHTML += `<div><textarea rows=5>${idea.description}</textarea></div>`
     }
@@ -250,6 +259,86 @@ function implementorsString(implementors) {
     return result;
 }
 
-function addSaveButtonListener() {
-    const saveBtn = document.getElementById()
+function addSaveButtonListener(idea) {
+    const saveBtnOld = document.getElementById('save-idea-btn');
+    const saveBtnNew = saveBtnOld.cloneNode(true);
+    saveBtnOld.parentNode.replaceChild(saveBtnNew, saveBtnOld);
+    saveBtnNew.addEventListener('click', (event) => {
+        const newDescription = document.querySelector('textarea').value;
+        const userIsImplementor = isUserImplementor(idea.implementors);
+        const implementChecked = document.getElementById('implement-check').checked;
+
+        if (userIsImplementor && !implementChecked) {
+            removeFromImplementors(idea);
+        }
+        else if (!userIsImplementor && implementChecked) {
+            addToImplementors(idea);
+        }
+        if (idea.description !== newDescription) {
+            idea.description = newDescription;
+            updateIdeaDescription(idea);
+        }
+    });
+}
+
+function removeFromImplementors(idea) {
+    const implementor = loggedInUser.implementors.find((implementor) => implementor.idea_id === idea.id);
+    fetch(`${url}/implementors/${implementor.id}`, {
+        method: 'DELETE',
+    }).then(resp => resp.json())
+    .then(implementor => {
+        //TBD: update numbers on the idea card
+
+        // loggedInUser.implementors.splice(upVoteIndex, 1)
+        // const card = event.target.parentElement.parentElement.parentElement
+        // updateUpVote(false, card)
+        // updateUpVoteButton(event.target, ideaId)
+    })
+    
+    console.log(implementor);
+    
+}
+
+function addToImplementors(idea) {
+    const implementor = {
+        user_id: loggedInUser.id,
+        idea_id: idea.id
+    }
+
+    fetch(`${url}/implementors`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify(implementor)
+    }).then(resp => resp.json())
+    .then(implementor => {
+        loggedInUser.implementors.push(implementor);
+        // TBD: update correspondent card with new implementor count
+        
+        // const card = event.target.parentElement.parentElement.parentElement
+        // updateUpVote(true, card)
+        // updateUpVoteButton(event.target, id)
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
+function updateIdeaDescription(idea) {
+    fetch(`${url}/ideas/${idea.id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify(idea)
+    }).then(resp => resp.json())
+    .then(newIdea => {
+        console.log(newIdea);
+        // TBD: update correspondent card with new description
+    
+    }).catch(err => {
+        console.log(err);
+    })
 }

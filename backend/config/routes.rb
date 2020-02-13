@@ -8,10 +8,14 @@ Rails.application.routes.draw do
   get '/ideas', to: 'ideas#index'
   post '/ideas', to: 'ideas#create'
   get '/ideas/:id', to: 'ideas#show'
+  patch '/ideas/:id', to: 'ideas#update'
   # Comments
   get '/comments/user/:id', to: 'comments#userComments'
   get '/comments/idea/:id', to: 'comments#ideaComments'
   # Up Vote
   post '/up_votes', to: 'up_votes#create'
   delete '/up_votes/:id', to: 'up_votes#destroy'
+   # Implementor
+   post '/implementors', to: 'implementors#create'
+   delete '/implementors/:id', to: 'implementors#destroy'
 end

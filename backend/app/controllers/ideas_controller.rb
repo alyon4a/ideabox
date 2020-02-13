@@ -14,6 +14,12 @@ class IdeasController < ApplicationController
         render json: idea, serializer: IdeaDetailSerializer, status: 201
     end
 
+    def update
+        idea = Idea.find(params[:id])
+        idea.update(idea_params)
+        render json: idea, serializer: IdeaDetailSerializer, status: 201
+    end
+
     private
     def idea_params
         params.require(:idea).permit(:user_id, :title, :description, :image)
