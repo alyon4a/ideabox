@@ -172,3 +172,12 @@ textarea {
   max-width: 240px;
   height: 305px;
 }
+
+.badge {
+  font-size: 100%;
+  margin-top: 1px;
+}
+
+.add-idea-form {
+  text-align: center;
+}

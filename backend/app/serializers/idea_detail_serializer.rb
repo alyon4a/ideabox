@@ -3,6 +3,7 @@ class IdeaDetailSerializer < ActiveModel::Serializer
   belongs_to :user
   has_many :up_votes
   has_many :implementors
+  has_many :tags
 
   def up_votes 
     self.object.up_votes ? self.object.up_votes.length : 0

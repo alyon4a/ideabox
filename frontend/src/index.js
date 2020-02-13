@@ -222,8 +222,14 @@ function isUserImplementor(implementors) {
 function renderIdeaDetails(idea, modalBody) {
     const firstRow = modalBody.querySelector('.col-5')
     firstRow.innerHTML = `
-        <img class="idea-img-details" src=${idea.image}>
+        <img class="idea-img-details" src=${idea.image}><br/>
     `
+    for(let i = 0; i<10; i++) {
+        idea.tags.forEach(tag => {
+            firstRow.innerHTML += `<span class="badge badge-primary badge-pill">${tag.name}</span>`
+        })
+        
+    }
     const secondRow = modalBody.querySelector('.col-7')
     implementors = implementorsString(idea.implementors);
     secondRow.innerHTML = `
