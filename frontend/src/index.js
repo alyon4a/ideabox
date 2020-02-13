@@ -60,11 +60,15 @@ function getUser(email) {
 
 function addNewButtonListener() {
     const newIdeaBtn = document.getElementById('new-idea-btn');
-    const newIdeaForm = document.getElementById('new-idea-container');
     newIdeaBtn.addEventListener('click', (event) => {
-        addIdea = !addIdea;
-        newIdeaForm.style.display = addIdea ? 'flex' : 'none';
+        toggleCreate()
     });
+}
+
+function toggleCreate() {
+    const newIdeaForm = document.getElementById('new-idea-container');
+    addIdea = !addIdea;
+    newIdeaForm.style.display = addIdea ? 'flex' : 'none';
 }
 
 function addLoginEventListener() {
@@ -109,6 +113,7 @@ function createIdea(idea) {
         body: JSON.stringify(idea)
     }).then(resp => resp.json())
         .then(idea => {
+            toggleCreate()
             renderIdea(idea)
         })
 }
@@ -287,8 +292,10 @@ function renderIdeaDetails(idea, modalBody) {
     }
     if (idea.user.id === loggedInUser.id) {
         secondRow.innerHTML += `<div><textarea rows=5>${idea.description}</textarea></div>`
+        addDelete(modalBody, idea)
     }
     else {
+        document.querySelector('.btn-danger').remove()
         secondRow.innerHTML += `<div><p>${idea.description}</p></div>`
     }
 }
@@ -302,6 +309,30 @@ function implementorsString(implementors) {
         result = "None."
     }
     return result;
+}
+
+function addDelete(modalBody, idea) {
+    const footer = modalBody.parentElement.querySelector('.modal-footer')
+    const button = document.createElement('button')
+    button.className = "btn btn-danger"
+    button.innerText = 'Delete'
+    addDeleteEvent(button, idea)
+    footer.appendChild(button)
+}
+
+function addDeleteEvent(button, idea) {
+    button.addEventListener('click', event => {
+        fetch(`${url}/ideas/${idea.id}`, {
+            method: 'DELETE',
+        }).then(resp => resp.json())
+        .then(json => {
+            if(json) {
+                $('#ideaModal').modal('hide')
+                document.getElementById('idea-collection').innerHTML = ''
+                getIdeas();
+            }
+        })
+    })
 }
 
 function addSaveButtonListener(idea) {

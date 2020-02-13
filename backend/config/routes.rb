@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/ideas', to: 'ideas#create'
   get '/ideas/:id', to: 'ideas#show'
   patch '/ideas/:id', to: 'ideas#update'
+  delete '/ideas/:id', to: 'ideas#destroy'
   # Comments
   get '/comments/user/:id', to: 'comments#userComments'
   get '/comments/idea/:id', to: 'comments#ideaComments'

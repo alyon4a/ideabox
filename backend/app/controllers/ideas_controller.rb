@@ -27,6 +27,12 @@ class IdeasController < ApplicationController
         render json: idea, serializer: IdeaDetailSerializer, status: 201
     end
 
+    def destroy
+        idea = Idea.find(params[:id])
+        idea.destroy()
+        render json: true, status: 201
+    end
+
     private
     def idea_params
         params.require(:idea).permit(:user_id, :title, :description, :image)
