@@ -382,7 +382,11 @@ function updateIdeaDescription(idea) {
         .then(newIdea => {
             console.log(newIdea);
             // TBD: update correspondent card with new description
-
+            const cards = document.getElementsByClassName('card')
+            const card = Array.from(cards).find(card => parseInt(card.dataset.id) === newIdea.id)
+            if(card) {
+                card.querySelector('p').innerText = newIdea.description
+            }
         }).catch(err => {
             console.log(err);
         })
