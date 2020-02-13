@@ -7,27 +7,41 @@ window.addEventListener('DOMContentLoaded', () => {
     hideOrDisplayOnLogin();
     addNewButtonListener();
     addFormSubmitEvent();
+    addTags();
 })
 
 // Only for tags
-$(function () {
-    $('#tags input').on('focusout', function () {
-        var txt = this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g, '');
-        if (txt) $(this).before('<span class="tag">' + txt + '</span>');
-        this.value = "";
-    }).on('keyup', function (event) {
-        if (/(188|13)/.test(event.which)) $(this).focusout();
-    }).on('keypress', (event) => {
+function addTags() {
+    const tagInput = document.querySelector('input[name=tag]')
+    tagInput.addEventListener('focusout', (event) => {
+        addTag(event)
+    })
+    tagInput.addEventListener('keyup', (event) => {
+        if (/(188|13)/.test(event.which)) 
+            addTag(event)
+    })
+
+    tagInput.addEventListener('keypress', (event) => {
         if((event.keyCode == 13)) {
             event.preventDefault();
             return false;
         }
     });
+};
 
-    $('#tags').on('click', '.tag', function () {
-        $(this).remove();
-    });
-});
+function addTag(event) {
+    var txt = event.target.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g, '');
+    if (txt) {
+        let tag = document.createElement('span');
+        tag.className = "tag"
+        tag.innerText = txt
+        tag.addEventListener('click', (event) => {
+            event.target.remove()
+        })
+        event.target.parentElement.insertBefore(tag, event.target);
+        event.target.value = "";
+    }
+}
 
 function getUser(email) {
     fetch(`${url}/users/login?email=${email}`)
@@ -127,14 +141,14 @@ function renderIdea(idea) {
     </div>
     <div class="row no-gutters">
         <div class="col-3 text-left">
-            <label class='upvote-num align-middle'>${idea.implementors}</label>
+            <label class='upvote-num align-middle'>${idea.implementors ? idea.implementors : 0}</label>
             <button class='upvote-btn align-middle justify-content-center'>
                 <image class="icon" src="https://www.pinclipart.com/picdir/big/345-3453156_person-icons-outline-iconfinder-clipart.png" />
             </button>
         </div>
         <div class="col-6"><button class="btn btn-info idea-details-btn" data-toggle="modal" data-target="#ideaModal">...</button></div>
         <div class='col-3 text-right'>
-            <label class='upvote-num align-middle'>${idea.up_votes}</label>
+            <label class='upvote-num align-middle'>${idea.up_votes ? idea.up_votes : 0}</label>
         </div>
     </div>
     `
