@@ -6,6 +6,13 @@ class IdeasController < ApplicationController
 
     def create
         idea = Idea.create(idea_params)
+        params["tags"].split(",").each do |tag_name|
+            tag = Tag.find_by(name: tag_name)
+            if !tag
+                tag = Tag.create(name: tag_name)
+            end
+            IdeaTag.create(tag: tag, idea: idea)
+        end
         render json: idea, each_serializer: IdeaCardSerializer, status: 201
     end
 

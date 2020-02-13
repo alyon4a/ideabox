@@ -58,7 +58,7 @@
 
   <div id="logged-in">
     <div class="container" id="new-idea-container">
-      <form class="add-idea-form mx-auto">
+      <form class="add-idea-form mx-auto" onsubmit="return false;">
         <h3>Add an idea!</h3>
 
         <input type="text" name="title" value="" placeholder="Enter an idea title..." class="input-text" />
@@ -66,6 +66,10 @@
         <input type="text" name="description" value="" placeholder="Enter an idea's description..." class="input-text" />
         <br />
         <input type="text" name="image" value="" placeholder="Enter an idea's image URL..." class="input-text" />
+        <br />
+        <div id="tags">
+          <input type="text" name="tag" value="" placeholder="Enter tags..." />
+        </div>
         <br />
         <input type="submit" name="submit" value="Create New Idea" class="submit add-button" />
       </form>

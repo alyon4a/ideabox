@@ -6,22 +6,42 @@ window.addEventListener('DOMContentLoaded', () => {
     addLoginEventListener(); // Need to change to login
     hideOrDisplayOnLogin();
     addNewButtonListener();
-    addFormSubmitEvent()
+    addFormSubmitEvent();
 })
+
+// Only for tags
+$(function () {
+    $('#tags input').on('focusout', function () {
+        var txt = this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g, '');
+        if (txt) $(this).before('<span class="tag">' + txt + '</span>');
+        this.value = "";
+    }).on('keyup', function (event) {
+        if (/(188|13)/.test(event.which)) $(this).focusout();
+    }).on('keypress', (event) => {
+        if((event.keyCode == 13)) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+    $('#tags').on('click', '.tag', function () {
+        $(this).remove();
+    });
+});
 
 function getUser(email) {
     fetch(`${url}/users/login?email=${email}`)
-    .then(resp => resp.json())
-    .then(user => {
-        if(user) {
-            getIdeas();
-            loggedInUser = user;
-            const profile = document.querySelector(".profile")
-            profile.innerHTML = ""
-            profile.innerHTML = `<h1>Welcome, ${user.name}!</h1>`
-            hideOrDisplayOnLogin();
-        }
-    })
+        .then(resp => resp.json())
+        .then(user => {
+            if (user) {
+                getIdeas();
+                loggedInUser = user;
+                const profile = document.querySelector(".profile")
+                profile.innerHTML = ""
+                profile.innerHTML = `<h1>Welcome, ${user.name}!</h1>`
+                hideOrDisplayOnLogin();
+            }
+        })
 }
 
 function addNewButtonListener() {
@@ -47,13 +67,21 @@ function addFormSubmitEvent() {
     const form = document.querySelector(".add-idea-form");
     form.addEventListener('submit', (event) => {
         event.preventDefault();
+        const allTags = Array.from(document.getElementsByClassName('tag'))
+        const tags = allTags.reduce((result, tag) => {
+            const space = result.length > 0 ? "," : "";
+            return result + space + tag.innerText;
+        }, "");
         const idea = {
             user_id: loggedInUser.id,
             title: form.title.value,
             description: form.description.value,
-            image: form.image.value
+            image: form.image.value,
+            tags: tags
         }
         createIdea(idea);
+        form.reset()
+        allTags.forEach(tag => tag.remove())
     });
 }
 
@@ -66,9 +94,9 @@ function createIdea(idea) {
         },
         body: JSON.stringify(idea)
     }).then(resp => resp.json())
-    .then(idea => {
-        renderIdea(idea)
-    })
+        .then(idea => {
+            renderIdea(idea)
+        })
 }
 
 function getIdeas() {
@@ -119,12 +147,12 @@ function renderIdea(idea) {
 }
 
 function addUpVoteButton(div, ideaId) {
-    if(loggedInUser) {
+    if (loggedInUser) {
         const likedIdea = loggedInUser.up_votes.find(upVote => upVote.idea_id === ideaId)
         const button = document.createElement('button')
         button.className = "upvote-btn align-middle"
         button.innerText = '^'
-        if(likedIdea) {
+        if (likedIdea) {
             button.classList.add('flip')
             addDownVoteEvent(button)
         } else {
@@ -150,14 +178,14 @@ function addUpVoteEvent(button) {
             },
             body: JSON.stringify(up_vote)
         }).then(resp => resp.json())
-        .then(like => {
-            const card = event.target.parentElement.parentElement.parentElement
-            updateUpVote(true, card)
-            loggedInUser.up_votes.push(like)
-            updateUpVoteButton(event.target, id)
-        }).catch(err => {
-            console.log("already liked")
-        })
+            .then(like => {
+                const card = event.target.parentElement.parentElement.parentElement
+                updateUpVote(true, card)
+                loggedInUser.up_votes.push(like)
+                updateUpVoteButton(event.target, id)
+            }).catch(err => {
+                console.log("already liked")
+            })
     })
 }
 
@@ -168,12 +196,12 @@ function addDownVoteEvent(button) {
         fetch(`${url}/up_votes/${loggedInUser.up_votes[upVoteIndex].id}`, {
             method: 'DELETE',
         }).then(resp => resp.json())
-        .then(like => {
-            loggedInUser.up_votes.splice(upVoteIndex, 1)
-            const card = event.target.parentElement.parentElement.parentElement
-            updateUpVote(false, card)
-            updateUpVoteButton(event.target, ideaId)
-        })
+            .then(like => {
+                loggedInUser.up_votes.splice(upVoteIndex, 1)
+                const card = event.target.parentElement.parentElement.parentElement
+                updateUpVote(false, card)
+                updateUpVoteButton(event.target, ideaId)
+            })
     })
 }
 
@@ -185,7 +213,7 @@ function updateUpVoteButton(button, idea_id) {
 
 function updateUpVote(upvote, card) {
     const likes = card.getElementsByClassName('upvote-num')[1]
-    if(upvote) {
+    if (upvote) {
         likes.innerText = parseInt(likes.innerText) + 1
     } else {
         likes.innerText = parseInt(likes.innerText) - 1
@@ -201,21 +229,21 @@ function hideOrDisplayOnLogin() {
 function addIdeaDetailsBtnListener(button) {
     button.addEventListener('click', (event) => {
         const id = event.target.parentElement.parentElement.parentElement.dataset.id
-        
+
         fetch(`${url}/ideas/${id}`)
-        .then(resp => resp.json())
-        .then(idea => {
-            const modalBody = document.getElementsByClassName('modal-body')[0];
-            const ideaModalLabel = document.getElementById('ideaModalLabel');
-            ideaModalLabel.innerText = idea.title;
-            renderIdeaDetails(idea, modalBody);
-            addSaveButtonListener(idea);
-        })
+            .then(resp => resp.json())
+            .then(idea => {
+                const modalBody = document.getElementsByClassName('modal-body')[0];
+                const ideaModalLabel = document.getElementById('ideaModalLabel');
+                ideaModalLabel.innerText = idea.title;
+                renderIdeaDetails(idea, modalBody);
+                addSaveButtonListener(idea);
+            })
     })
 }
 
 function isUserImplementor(implementors) {
-    const implementor = implementors.find(implementor => {return implementor.id === loggedInUser.id});
+    const implementor = implementors.find(implementor => { return implementor.id === loggedInUser.id });
     return implementor != undefined;
 }
 
@@ -224,12 +252,9 @@ function renderIdeaDetails(idea, modalBody) {
     firstRow.innerHTML = `
         <img class="idea-img-details" src=${idea.image}><br/>
     `
-    for(let i = 0; i<10; i++) {
-        idea.tags.forEach(tag => {
-            firstRow.innerHTML += `<span class="badge badge-primary badge-pill">${tag.name}</span>`
-        })
-        
-    }
+    idea.tags.forEach(tag => {
+        firstRow.innerHTML += `<span class="badge badge-primary badge-pill">${tag.name}</span>`
+    })
     const secondRow = modalBody.querySelector('.col-7')
     implementors = implementorsString(idea.implementors);
     secondRow.innerHTML = `
@@ -292,17 +317,17 @@ function removeFromImplementors(idea) {
     fetch(`${url}/implementors/${implementor.id}`, {
         method: 'DELETE',
     }).then(resp => resp.json())
-    .then(implementor => {
-        //TBD: update numbers on the idea card
+        .then(implementor => {
+            //TBD: update numbers on the idea card
 
-        // loggedInUser.implementors.splice(upVoteIndex, 1)
-        // const card = event.target.parentElement.parentElement.parentElement
-        // updateUpVote(false, card)
-        // updateUpVoteButton(event.target, ideaId)
-    })
-    
+            // loggedInUser.implementors.splice(upVoteIndex, 1)
+            // const card = event.target.parentElement.parentElement.parentElement
+            // updateUpVote(false, card)
+            // updateUpVoteButton(event.target, ideaId)
+        })
+
     console.log(implementor);
-    
+
 }
 
 function addToImplementors(idea) {
@@ -319,16 +344,16 @@ function addToImplementors(idea) {
         },
         body: JSON.stringify(implementor)
     }).then(resp => resp.json())
-    .then(implementor => {
-        loggedInUser.implementors.push(implementor);
-        // TBD: update correspondent card with new implementor count
-        
-        // const card = event.target.parentElement.parentElement.parentElement
-        // updateUpVote(true, card)
-        // updateUpVoteButton(event.target, id)
-    }).catch(err => {
-        console.log(err);
-    })
+        .then(implementor => {
+            loggedInUser.implementors.push(implementor);
+            // TBD: update correspondent card with new implementor count
+
+            // const card = event.target.parentElement.parentElement.parentElement
+            // updateUpVote(true, card)
+            // updateUpVoteButton(event.target, id)
+        }).catch(err => {
+            console.log(err);
+        })
 }
 
 function updateIdeaDescription(idea) {
@@ -340,11 +365,11 @@ function updateIdeaDescription(idea) {
         },
         body: JSON.stringify(idea)
     }).then(resp => resp.json())
-    .then(newIdea => {
-        console.log(newIdea);
-        // TBD: update correspondent card with new description
-    
-    }).catch(err => {
-        console.log(err);
-    })
+        .then(newIdea => {
+            console.log(newIdea);
+            // TBD: update correspondent card with new description
+
+        }).catch(err => {
+            console.log(err);
+        })
 }
