@@ -186,6 +186,8 @@ textarea {
   border:1px solid #ccc;
   padding:4px;
   font-family:monospace;
+  width: 60%;
+  margin-left: 20%;
 }
 #tags span.tag{
   cursor:pointer;
@@ -212,5 +214,5 @@ textarea {
 #tags input{
   border:0;
   padding:7px;
-  width:auto;
+  width:100%;
 }
