@@ -287,6 +287,9 @@ function renderIdeaDetails(idea, modalBody) {
         </div>
     `
     const userIsImplementor = isUserImplementor(idea.implementors);
+    const deleteButton = document.querySelector('.btn-danger');
+    if(deleteButton)
+        deleteButton.remove()
     if (userIsImplementor) {
         document.getElementById('implement-check').defaultChecked = true;
     }
@@ -295,7 +298,6 @@ function renderIdeaDetails(idea, modalBody) {
         addDelete(modalBody, idea)
     }
     else {
-        document.querySelector('.btn-danger').remove()
         secondRow.innerHTML += `<div><p>${idea.description}</p></div>`
     }
 }
